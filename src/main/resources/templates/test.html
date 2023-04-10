@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>文件管理系统</title>
+    <style>
+        .content {
+            width: 80%;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+<div class="content panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">文件上传下载</h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <form method="post" enctype="multipart/form-data" th:action="@{/pic/upload}">
+                <input type="file" name="multipartFile">
+                <input type="submit" style="margin-top:20px" value="点击上传" class="btn btn-primary btn-sm"/>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="content panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">翻译结果</h3>
+    </div>
+    <h4 th:text="${base64}"></h4>
+</div>
+</body>
+</html>
