@@ -83,6 +83,7 @@ public class OcrController {
     }
 
     private static List<String> parseOcrResult(String message) {
+        log.info("parseOcrResult, ocr result: {}", message);
         if (StringUtils.isBlank(message)) {
             return Collections.singletonList("ocr识别失败");
         }
@@ -144,6 +145,7 @@ public class OcrController {
     }
 
     private String parseTranslateResult(String message) {
+        log.info("parseTranslateResult, message: {}", message);
         if (StringUtils.isBlank(message)) {
             return "翻译失败，返回结果为空";
         }
