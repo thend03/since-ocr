@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -132,8 +134,7 @@ public class OcrController {
             if (StringUtils.isBlank(s)) {
                 continue;
             }
-            String url = googleTranslateConfig.getUrl() + s;
-
+            String url = googleTranslateConfig.getUrl() + URLEncoder.encode(s, StandardCharsets.UTF_8);
             String translate = OkHttpUtil.getInstance().doGet(url);
             String s1 = parseTranslateResult(translate);
             TranslateResult translateResult = new TranslateResult();
