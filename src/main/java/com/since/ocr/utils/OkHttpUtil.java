@@ -2,6 +2,7 @@ package com.since.ocr.utils;
 
 import com.alibaba.fastjson.JSON;
 import okhttp3.*;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.File;
@@ -36,21 +37,34 @@ public class OkHttpUtil {
     }
 
 
-    public String postApplicationXWwwFormUrlencoded(String url, Headers headers, String data) throws IOException {
-        FormBody formBody = new FormBody.Builder().add("data", data).build();
-        if (Objects.nonNull(headers)) {
+    public String postApplicationXWwwFormUrlencoded(String url, Headers headers, Map<String,String> params) throws IOException {
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        if (MapUtils.isNotEmpty(params)) {
+            params.forEach(formBodyBuilder::add);
+        }
+        FormBody formBody = formBodyBuilder.build();
+
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(url)
+                .addHeader("Content-Type","application/x-www-form-urlencoded")
+                .post(formBody);
+        if (headers!=null) {
             requestBuilder.headers(headers);
         }
-        Request request = requestBuilder.url(url).post(formBody).build();
+        Request request = requestBuilder.build();
         Response response = okHttpClient.newCall(request).execute();
         return Objects.requireNonNull(response.body()).string();
     }
 
     public String postApplicationJson(String url,Headers headers,Map<String,Object> params) {
-        if (Objects.nonNull(headers)) {
-            requestBuilder.headers(headers);
+        Request.Builder builder = new Request.Builder()
+                .url(url)
+                .post(RequestBody.create(MediaType.parse("application/json"), JSON.toJSONString(params)))
+                .addHeader("Content-Type", "application/json");
+        if (headers!=null) {
+            builder.headers(headers);
         }
-        Request request = new Request.Builder().url(url).post(RequestBody.create(MediaType.parse("application/json"), JSON.toJSONString(params))).addHeader("Content-Type", "application/json").build();
+        Request request = builder.build();
         return execute(request);
     }
 

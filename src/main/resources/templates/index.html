@@ -10,12 +10,17 @@
             width: 80%;
             margin: 10px auto;
         }
+        .td_first {
+            width: 10%;
+            height: auto;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
 <div class="content panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">文件上传下载</h3>
+        <h3 class="panel-title">图片上传</h3>
     </div>
     <div class="panel-body">
         <div class="form-group">
@@ -28,17 +33,17 @@
             <tr>
                 <td width="100px">提取结果</td>
                 <td>翻译结果</td>
-<!--                <td>操作</td>-->
+                <!--                <td>操作</td>-->
             </tr>
             <tr th:each="translate:${translateList}">
-                <td class="td_style" th:text="${translate.source}"/>
+                <td class="td_first" th:text="${translate.source}"/>
                 <td th:text="${translate.target}"/>
-<!--                <td>-->
-<!--                    <a class="btn btn-success" role="button" th:href="@{/file/download(id=${file.id})}">下载</a>-->
-<!--                    <a class="btn btn-danger" role="button" th:href="@{/file/delete(id=${file.id})}">删除</a>-->
-<!--                </td>-->
             </tr>
         </table>
+        <div th:if="${ocrError}">
+            <div>请求出错:</div>
+            <p th:text="${ocrError}"></p>
+        </div>
     </div>
 </div>
 <!--<div class="content panel panel-primary">-->
